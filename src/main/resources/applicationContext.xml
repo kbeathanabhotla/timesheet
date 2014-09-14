@@ -43,9 +43,9 @@
 				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="current_session_context_class">thread</prop>
 				<prop key="hibernate.jdbc.batch_size">20</prop>
-				<prop key="hibernate.cache.region.factory_class">net.sf.ehcache.hibernate.EhCacheRegionFactory</prop>
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="net.sf.ehcache.configurationResourceName">/ehcache.xml</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">/hibernate-ehcache.xml</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
@@ -62,12 +62,11 @@
 		</property>
 	</bean>
 	
-	<!-- <cache:annotation-driven />
-	<bean id="ehCacheCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehcache" />
 	</bean>
 	
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:shared="true">
-		<property name="configLocation" value="classpath:ehcache.xml" />
-	</bean> -->
+		<property name="configLocation" value="classpath:cache.xml" />
+	</bean>
 </beans>

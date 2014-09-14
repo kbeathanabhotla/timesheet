@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
-    monitoring="autodetect" dynamicConfig="true">
+    monitoring="autodetect" dynamicConfig="true" name="auth">
  
-    <diskStore path="java.io.tmpdir/ehcache" />
+    <diskStore path="java.io.tmpdir/ehcache/auth" />
  
     <defaultCache maxEntriesLocalHeap="10000" eternal="false"
         timeToIdleSeconds="120" timeToLiveSeconds="120" diskSpoolBufferSizeMB="30"
@@ -12,13 +12,18 @@
         <persistence strategy="localTempSwap" />
     </defaultCache>
  
-    <cache name="data" maxEntriesLocalHeap="10000" eternal="false"
+    <cache name="authTokens" maxEntriesLocalHeap="10000" eternal="false"
         timeToIdleSeconds="1800" timeToLiveSeconds="360">
         <persistence strategy="localTempSwap" />
     </cache>
+    
+    <cache name="org.hibernate.cache.internal.StandardQueryCache"
+        maxEntriesLocalHeap="5" eternal="false" timeToLiveSeconds="120">
+        <persistence strategy="localTempSwap" />
+    </cache>
  
-    <cache name="authTokens" maxEntriesLocalHeap="10000" eternal="false"
-        timeToIdleSeconds="1800" timeToLiveSeconds="360">
+    <cache name="org.hibernate.cache.spi.UpdateTimestampsCache"
+        maxEntriesLocalHeap="5000" eternal="true">
         <persistence strategy="localTempSwap" />
     </cache>
 </ehcache>

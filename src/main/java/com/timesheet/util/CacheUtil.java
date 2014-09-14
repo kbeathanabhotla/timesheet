@@ -3,38 +3,34 @@ package com.timesheet.util;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.Cache;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 import com.timesheet.constants.ApplicationConstants;
 import com.timesheet.domain.Person;
 
-//@Component
+@Component
 public class CacheUtil {
 
-	private static EhCacheCacheManager cacheMgr = null;
-	
 	@Autowired
-	private EhCacheCacheManager ehCacheCacheManager;
+	private CacheManager cacheManager;
+	
+	private static CacheManager ehCacheCacheManager;
 	
 	@PostConstruct
 	public void init() {
-		cacheMgr = ehCacheCacheManager;
+		ehCacheCacheManager = cacheManager;
 	}
 	
 	public static Person getPerson(String authToken) {
-		Cache cache = cacheMgr.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME);
-		return cache.get(authToken, Person.class);
+		return ehCacheCacheManager.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME).get(authToken, Person.class);
 	}
 	
 	public static void savePersonToCache(String authToken, Person person) {
-		Cache cache = cacheMgr.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME);
-		cache.put(authToken, person);
+		ehCacheCacheManager.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME).put(authToken, person);
 	}
 	
 	public static void evictPersonFromCache(String authToken) {
-		Cache cache = cacheMgr.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME);
-		cache.evict(authToken);
+		ehCacheCacheManager.getCache(ApplicationConstants.AUTH_TOKENS_CACHE_NAME).evict(authToken);
 	}
 }
