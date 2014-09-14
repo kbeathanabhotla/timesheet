@@ -18,7 +18,7 @@ public class CacheUtil {
 	private static CacheManager ehCacheCacheManager;
 	
 	@PostConstruct
-	public void init() {
+	private void init() {
 		ehCacheCacheManager = cacheManager;
 	}
 	

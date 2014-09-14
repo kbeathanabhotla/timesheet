@@ -25,11 +25,7 @@ public class WorklogResource {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getWorklog(@QueryParam("offset") int offset,@QueryParam("count") int count, @Context HttpHeaders httpHeaders) {
-		
-		for(Entry<String, List<String>> header : httpHeaders.getRequestHeaders().entrySet()) {
-			System.out.println(header.getKey()+"	"+header.getValue());
-		}
+	public Response getWorklog(@QueryParam("offset") int offset,@QueryParam("count") int count) {
 		
 		return Response.status(Response.Status.OK).entity("{\"Message\":\"OK\"}").build();
 	}

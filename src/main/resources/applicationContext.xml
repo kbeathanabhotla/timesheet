@@ -69,4 +69,28 @@
 	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:shared="true">
 		<property name="configLocation" value="classpath:cache.xml" />
 	</bean>
+	
+	<!-- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+    	<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+	</bean> -->
+	
+	<!-- <bean id="freeMarkerConfigurationFactory"	class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactory">
+    	<property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
+	</bean> -->
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="port" value="25"/>
+        <!-- <property name="username" value="timesheet@valuelabs.net"/>
+        <property name="password" value="password"/> -->
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">false</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">false</prop>
+            </props>
+        </property>
+    </bean>
+
 </beans>
