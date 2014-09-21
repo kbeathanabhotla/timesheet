@@ -1,4 +1,4 @@
-package com.timesheet.domain;
+package com.timesheet.domain.hibernate;
 
 import java.util.Date;
 
@@ -26,6 +26,9 @@ public class Worklog {
 	@JoinColumn(name="person",referencedColumnName="id",insertable=false,updatable=false,nullable=false)
 	private Person person;
 	
+	@Column(name="person",insertable=false,updatable=false)
+	private long personId;
+	
 	@Column(nullable=false)
 	@Temporal(TemporalType.DATE)
 	private Date date;
@@ -34,13 +37,22 @@ public class Worklog {
 	@JoinColumn(name="client",referencedColumnName="id",nullable=false,insertable=false,updatable=false)
 	private Client client;
 	
+	@Column(name="client",insertable=false,updatable=false)
+	private long clientId;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="activity_type",referencedColumnName="id",nullable=false,insertable=false,updatable=false)
 	private ActivityType activityType;
 	
+	@Column(name="activity_type",insertable=false,updatable=false)
+	private long activityTypeId;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="module",referencedColumnName="id",nullable=false,insertable=false,updatable=false)
 	private Module module;
+	
+	@Column(name="module",insertable=false,updatable=false)
+	private long moduleId;
 	
 	@Column(name="task_name",nullable=false,length=160)
 	private String taskName;
@@ -52,6 +64,9 @@ public class Worklog {
 	@JoinColumn(name="activity",referencedColumnName="id",nullable=false,insertable=false,updatable=false)
 	private Activity activity;
 	
+	@Column(name="activity",insertable=false,updatable=false)
+	private long activityId;
+	
 	@Column(nullable=false,name="hours_spent")
 	private Float hoursSpent;
 	
@@ -59,6 +74,45 @@ public class Worklog {
 	@JoinColumn(name="status",referencedColumnName="id",nullable=false,insertable=false,updatable=false)
 	private Status status;
 	
+	@Column(name="status",insertable=false,updatable=false)
+	private long statusId;
+	
+	public long getClientId() {
+		return clientId;
+	}
+	public void setClientId(long clientId) {
+		this.clientId = clientId;
+	}
+	public long getActivityTypeId() {
+		return activityTypeId;
+	}
+	public void setActivityTypeId(long activityTypeId) {
+		this.activityTypeId = activityTypeId;
+	}
+	public long getModuleId() {
+		return moduleId;
+	}
+	public void setModuleId(long moduleId) {
+		this.moduleId = moduleId;
+	}
+	public long getActivityId() {
+		return activityId;
+	}
+	public void setActivityId(long activityId) {
+		this.activityId = activityId;
+	}
+	public long getStatusId() {
+		return statusId;
+	}
+	public void setStatusId(long statusId) {
+		this.statusId = statusId;
+	}
+	public long getPersonId() {
+		return personId;
+	}
+	public void setPersonId(long personId) {
+		this.personId = personId;
+	}
 	public int getId() {
 		return id;
 	}

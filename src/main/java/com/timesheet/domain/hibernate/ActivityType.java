@@ -1,4 +1,4 @@
-package com.timesheet.domain;
+package com.timesheet.domain.hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,10 +11,10 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
-@Table(name="Client")
+@Table(name="Activity_Type")
 @Cache(usage=CacheConcurrencyStrategy.READ_ONLY,region="data")
-public class Client {
-
+public class ActivityType {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -55,7 +55,7 @@ public class Client {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Client other = (Client) obj;
+		ActivityType other = (ActivityType) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -69,7 +69,7 @@ public class Client {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder(0);
-		builder.append("Client [id=" + id + ", name=" + name + "]");
+		builder.append("ActivityType [id=" + id + ", name=" + name + "]");
 		return builder.toString();
 	}
 }

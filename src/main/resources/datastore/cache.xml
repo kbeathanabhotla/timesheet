@@ -12,8 +12,7 @@
         <persistence strategy="localTempSwap" />
     </defaultCache>
  
-    <cache name="authTokens" maxEntriesLocalHeap="10000" eternal="false"
-        timeToIdleSeconds="1800" timeToLiveSeconds="360">
+    <cache name="authTokens" maxEntriesLocalHeap="10000" eternal="true" timeToIdleSeconds="1800" timeToLiveSeconds="360">
         <persistence strategy="localTempSwap" />
     </cache>
     

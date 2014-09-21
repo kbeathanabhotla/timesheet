@@ -7,7 +7,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 import com.timesheet.constants.ApplicationConstants;
-import com.timesheet.domain.Person;
+import com.timesheet.domain.hibernate.Person;
 
 @Component
 public class CacheUtil {

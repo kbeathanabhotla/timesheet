@@ -1,4 +1,4 @@
-package com.timesheet.domain;
+package com.timesheet.domain.hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,31 +14,38 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
+/**
+ * @author Rama Krishna
+ * 
+ */
 @Entity
-@Table(name="Person")
-@Cache(usage=CacheConcurrencyStrategy.READ_ONLY,region="data")
+@Table(name = "Person")
+@Cache(usage = CacheConcurrencyStrategy.READ_ONLY, region = "data")
 public class Person {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
-	@Column(unique=true,length=160,nullable=false)
+	@Column(unique = true, length = 160, nullable = false)
 	private String name;
-	
-	@Column(unique=true,nullable=false,name="employee_id",length=5)
+
+	@Column(unique = true, nullable = false, name = "employee_id", length = 5)
 	private int employeeId;
-	
-	@Column(unique=true,nullable=false)
+
+	@Column(unique = true, nullable = false)
 	private String email;
-	
+
 	@Column
 	private boolean isAdmin;
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="team",referencedColumnName="id",insertable=false,nullable=false,updatable=false)
+
+	@Column
+	private boolean isAccountActivated;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "team", referencedColumnName = "id", insertable = false, nullable = false, updatable = false)
 	private Team team;
-	
+
 	@Transient
 	private String authToken;
 
@@ -98,6 +105,14 @@ public class Person {
 		this.authToken = authToken;
 	}
 
+	public boolean isAccountActivated() {
+		return isAccountActivated;
+	}
+
+	public void setAccountActivated(boolean isAccountActivated) {
+		this.isAccountActivated = isAccountActivated;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -105,6 +120,7 @@ public class Person {
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + employeeId;
 		result = prime * result + id;
+		result = prime * result + (isAccountActivated ? 1231 : 1237);
 		result = prime * result + (isAdmin ? 1231 : 1237);
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result + ((team == null) ? 0 : team.hashCode());
@@ -129,6 +145,8 @@ public class Person {
 			return false;
 		if (id != other.id)
 			return false;
+		if (isAccountActivated != other.isAccountActivated)
+			return false;
 		if (isAdmin != other.isAdmin)
 			return false;
 		if (name == null) {
@@ -146,8 +164,10 @@ public class Person {
 
 	@Override
 	public String toString() {
-		StringBuilder builder = new StringBuilder(0);
-		builder.append("Person [id=" + id + ", name=" + name + ", employeeId=" + employeeId + ", email=" + email + ", isAdmin=" + isAdmin + ", team=" + team + "]");
-		return builder.toString();
+		return "Person [id=" + id + ", name=" + name + ", employeeId="
+				+ employeeId + ", email=" + email + ", isAdmin=" + isAdmin
+				+ ", isAccountActivated=" + isAccountActivated + ", team="
+				+ team + "]";
 	}
+
 }

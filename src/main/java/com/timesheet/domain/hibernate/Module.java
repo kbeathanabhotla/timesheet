@@ -1,44 +1,43 @@
-package com.timesheet.domain;
+package com.timesheet.domain.hibernate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
+@Table(name="Module")
 @Cache(usage=CacheConcurrencyStrategy.READ_ONLY,region="data")
-public class Status {
-	
+public class Module {
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	@Column(unique=true,length=80,nullable=false)
 	private String name;
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder(0);
-		builder.append("Status [id=" + id + ", name=" + name + "]");
-		return builder.toString();
-	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -47,6 +46,7 @@ public class Status {
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -55,7 +55,7 @@ public class Status {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Status other = (Status) obj;
+		Module other = (Module) obj;
 		if (id != other.id)
 			return false;
 		if (name == null) {
@@ -64,5 +64,12 @@ public class Status {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder(0);
+		builder.append("Module [id=" + id + ", name=" + name + "]");
+		return builder.toString();
 	}
 }

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.timesheet.annotation.SecuredMethod;
 import com.timesheet.constants.ApplicationConstants;
 import com.timesheet.domain.Login;
-import com.timesheet.domain.Person;
+import com.timesheet.domain.hibernate.Person;
 import com.timesheet.service.ISecurityService;
 
 @Path("/security")
@@ -38,8 +38,8 @@ public class SecurityResource {
 	@PUT
 	@Path("/forgot-password")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response forgotPassword(@HeaderParam(ApplicationConstants.AUTHORIZATION) String authToken) {
-		securityService.forgotPassword(authToken);
+	public Response forgotPassword(Login login) {
+		securityService.forgotPassword(login);
 		return Response.status(Response.Status.NO_CONTENT).build();
 	}
 	

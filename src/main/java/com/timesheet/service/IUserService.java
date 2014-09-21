@@ -2,19 +2,22 @@ package com.timesheet.service;
 
 import java.util.List;
 
+import com.timesheet.domain.Login;
 import com.timesheet.domain.Pagination;
-import com.timesheet.domain.Person;
+import com.timesheet.domain.hibernate.Person;
 
 public interface IUserService {
 
-	void createUser(Person person);
+	void createPerson(Person person);
 
-	List<Person> getAllUsers(Pagination pagination);
+	void verifyPerson(Login login);
+	
+	List<Person> getAllPeople(Pagination pagination);
 
-	Person getUser(int userId);
+	Person getPerson(int personId);
 
-	void updatePerson(int userId, Person person);
+	void updatePerson(Person person);
 
-	void deletePerson(int userId);
+	void deletePerson(int personId);
 
 }

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
@@ -19,10 +16,10 @@
 	<context:annotation-config></context:annotation-config>
 	<context:component-scan base-package="com.timesheet"></context:component-scan>
 	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
-	
+
 	<bean id="propertyConfigurer"
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="location" value="classpath:db.properties"></property>
+		<property name="location" value="classpath:datastore/db.properties"></property>
 	</bean>
 
 	<bean id="dataSource"
@@ -44,53 +41,57 @@
 				<prop key="current_session_context_class">thread</prop>
 				<prop key="hibernate.jdbc.batch_size">20</prop>
 				<prop key="hibernate.cache.use_second_level_cache">true</prop>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
-				<prop key="net.sf.ehcache.configurationResourceName">/hibernate-ehcache.xml</prop>
+				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+				</prop>
+				<prop key="net.sf.ehcache.configurationResourceName">/datastore/hibernate-ehcache.xml</prop>
 			</props>
 		</property>
 		<property name="annotatedClasses">
 			<list>
-				<value>com.timesheet.domain.Worklog</value>
-				<value>com.timesheet.domain.ActivityType</value>
-				<value>com.timesheet.domain.Activity</value>
-				<value>com.timesheet.domain.Client</value>
-				<value>com.timesheet.domain.Module</value>
-				<value>com.timesheet.domain.Status</value>
-				<value>com.timesheet.domain.Person</value>
-				<value>com.timesheet.domain.Team</value>
+				<value>com.timesheet.domain.hibernate.Worklog</value>
+				<value>com.timesheet.domain.hibernate.ActivityType</value>
+				<value>com.timesheet.domain.hibernate.Activity</value>
+				<value>com.timesheet.domain.hibernate.Client</value>
+				<value>com.timesheet.domain.hibernate.Module</value>
+				<value>com.timesheet.domain.hibernate.Status</value>
+				<value>com.timesheet.domain.hibernate.Person</value>
+				<value>com.timesheet.domain.hibernate.Team</value>
 			</list>
 		</property>
 	</bean>
-	
+
 	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehcache" />
 	</bean>
-	
-	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:shared="true">
-		<property name="configLocation" value="classpath:cache.xml" />
+
+	<bean id="ehcache"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+		p:shared="true">
+		<property name="configLocation" value="classpath:datastore/cache.xml" />
 	</bean>
-	
-	<!-- <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-    	<property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
-	</bean> -->
-	
-	<!-- <bean id="freeMarkerConfigurationFactory"	class="org.springframework.ui.freemarker.FreeMarkerConfigurationFactory">
-    	<property name="templateLoaderPath" value="/WEB-INF/ftl/"/>
-	</bean> -->
+
+	<bean id="freeMarkerConfigurer"
+		class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath">
+			<value>/WEB-INF/freemarker/</value>
+		</property>
+	</bean>
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.gmail.com"/>
-        <property name="port" value="25"/>
-        <!-- <property name="username" value="timesheet@valuelabs.net"/>
-        <property name="password" value="password"/> -->
-        <property name="javaMailProperties">
-            <props>
-                <prop key="mail.transport.protocol">smtp</prop>
-                <prop key="mail.smtp.auth">false</prop>
-                <prop key="mail.smtp.starttls.enable">true</prop>
-                <prop key="mail.debug">false</prop>
-            </props>
-        </property>
-    </bean>
-
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="25" />
+		<!-- <property name="username" value="timesheet@valuelabs.net"/> <property 
+			name="password" value="password"/> -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">false</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">false</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<util:properties id="httpStatusCodes" location="classpath:/exceptions/httpStatusCodes.properties"></util:properties>
+	
 </beans>

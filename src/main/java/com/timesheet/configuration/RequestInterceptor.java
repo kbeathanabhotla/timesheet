@@ -50,7 +50,7 @@ public class RequestInterceptor {
 	@Pointcut("execution(public * *(..))")
 	public void publicMethod() {}
 	
-	@Before("(securedResource() || securedMethod()) && publicMethod() && !nonSecuredMethod()")
+	@Before("(securedResource() || securedMethod()) && publicMethod() && !nonSecuredMethod() && !adminMethod()")
 	public void checkForAuthHeader() {
 		
 		HttpServletRequest requestAttributes = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();

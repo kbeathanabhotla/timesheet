@@ -1,7 +1,7 @@
 package com.timesheet.service;
 
 import com.timesheet.domain.Login;
-import com.timesheet.domain.Person;
+import com.timesheet.domain.hibernate.Person;
 
 public interface ISecurityService {
 
@@ -9,6 +9,6 @@ public interface ISecurityService {
 
 	void signout(String authToken);
 
-	void forgotPassword(String authToken);
+	void forgotPassword(Login login);
 
 }
